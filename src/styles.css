@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+.segment-key {
+    color: #070606 !important;
+}
+.segment-type-boolean > .segment-main > .segment-value {
+    color: rgb(18, 19, 20) !important;
+}
+.segment-type-string > .segment-main > .segment-value {
+    color: rgb(100 117 217) !important;
+}
+.segment-type-number > .segment-main > .segment-value {
+    color:  rgb(197, 70, 244) !important;
+}
+
+@import '~@angular/material/theming';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.icon-display {
+    transform: scale(0.6);
+    color: #449759;
+    vertical-align: middle;
+   
+ }
+ .icon-display-save {
+    transform: scale(0.6);
+    color: rgba(115, 112, 112, 0.812);
+    vertical-align: middle;
+   
+ }
+ .icon-display-edit {
+    transform: scale(0.6);
+    color: rgba(65, 62, 62, 0.937);
+   
+ }
+ .segment-main-expanded {
+    padding-left: 100%;
+
+ }
+ input {
+    background-color: transparent;
+    border: 0px solid;
+    height: 20px;
+    width: 290px;
+    color: #CCC;
+    
+}
+
+.updation-button-list{
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 10=0px;
+    background-color: #2960aa;
+    border: #000000c7;
+    color: #fafafa;
+
+ 
+}

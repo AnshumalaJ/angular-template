@@ -8,6 +8,7 @@ import { NgxJsonViewerComponent } from './json-expaned/json-expaned.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { MatIconModule } from "@angular/material/icon"
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { McJsonEditorComponent } from './mc-json-editor/mc-json-editor.component';
 
 
 
@@ -18,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     ExtractionConfigViewerComponent,
     NgxJsonViewerComponent,
+    McJsonEditorComponent,
 
   ],
   imports: [

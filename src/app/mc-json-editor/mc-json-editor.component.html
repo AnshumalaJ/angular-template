@@ -1,0 +1,14 @@
+
+
+<form [formGroup]=" parentForm">
+  <div formArrayName="typesArray" *ngFor="let x of typesArray.value">
+  <div formGroupName="0">
+    <span>{{x|json}}</span>
+  </div>
+  </div>
+</form>
+
+
+
+
+ 

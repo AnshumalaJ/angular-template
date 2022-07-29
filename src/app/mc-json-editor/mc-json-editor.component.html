@@ -1,12 +1,18 @@
 
 
-<form [formGroup]=" parentForm">
-  <div formArrayName="typesArray" *ngFor="let x of typesArray.value">
-  <div formGroupName="0">
-    <span>{{x|json}}</span>
-  </div>
-  </div>
-</form>
+<form [formGroup]="form">
+
+<div *ngFor="let control of form.controls|keys;let i =index;">
+ <div [formGroupName]="control">
+        {{control}}
+ </div>
+</div>
+
+</form>  
+
+<pre>{{form.value|json}}</pre>
+
+
 
 
 

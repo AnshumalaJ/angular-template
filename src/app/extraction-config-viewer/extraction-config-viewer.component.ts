@@ -218,15 +218,17 @@ export class ExtractionConfigViewerComponent implements OnInit {
     }
   }
   new_data={
-    "abc":{
-      "a":"b",
-      "c":"d"
-    },
-    "efg":{
-      "x":"a",
-      "y":"b"
+    r:{
+   "abc":{
+    "a":"b",
+    "c":"d"
+  },
+  "efg":{
+    "x":"a",
+    "y":"b"
 
-    }
+  }
+}
   
   }
   

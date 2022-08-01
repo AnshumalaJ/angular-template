@@ -1,20 +1,63 @@
-
-
-<form [formGroup]="form">
-
-<div *ngFor="let control of form.controls|keys;let i =index;">
- <div [formGroupName]="control">
-        {{control}}
- </div>
-</div>
-
-</form>  
-
-<pre>{{form.value|json}}</pre>
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+    <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:form,controls:form.controls}">
+    </ng-container>
+  
 
 
 
+    <ng-template #non_leaf let-form="form" let-controls="controls" >
+    
+      <ng-container *ngFor="let element of form.value|keyvalue;let i =index;">
+        <br><br><span  >{{element.key}}</span>
+        <br><br><span>{{element.value|type}}</span>
+        <span>:</span><br>
 
 
+      <ng-container *ngIf="element.value|type as result">
+        <ng-container *ngIf="result=='leaf'">
+          <ng-container [ngTemplateOutlet]="leaf" [ngTemplateOutletContext]="{form:element}">
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="result=='non_leaf'">
+          <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:element}">
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      </ng-container>
+    </ng-template>
 
+
+<ng-template #leaf  let-form="form">
  
+  <ng-container *ngFor="let element of form.value|keyvalue;let i =index;">
+    <br><span>{{element.key}}</span>
+    <span>:</span>
+    <input [placeholder]="element.value">
+
+  </ng-container>
+
+</ng-template>
+</form> -->
+
+    <pre>{{form.value|json}}</pre>
+
+
+  
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+

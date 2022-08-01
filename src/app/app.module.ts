@@ -9,8 +9,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { MatIconModule } from "@angular/material/icon"
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { McJsonEditorComponent } from './mc-json-editor/mc-json-editor.component';
-import { KeysPipe } from './mc-json-editor/mc-json-editor.component';
 
+import { TypePipe } from './mc-json-editor/type-pipe';
 
 
 
@@ -22,7 +22,7 @@ import { KeysPipe } from './mc-json-editor/mc-json-editor.component';
     ExtractionConfigViewerComponent,
     NgxJsonViewerComponent,
     McJsonEditorComponent,
-    KeysPipe
+    TypePipe
    
  
 

@@ -214,23 +214,32 @@ export class ExtractionConfigViewerComponent implements OnInit {
           "jpath": "seller.location.town",
           "type": 2
         }
-      }
+      },
+      "test":[
+              {1:"abc"},
+              {2:"eee"}
+      ],
+      "test1":[
+              "a",
+              "b"
+      ],
+      "test2":[
+          "a",
+          {2:"eee"}
+          
+      ],
+      "test4":[
+       [
+         "a"
+       ],
+       [
+         "b"
+       ]
+        
+    ],
     }
   }
-  new_data={
-    r:{
-   "abc":{
-    "a":"b",
-    "c":"d"
-  },
-  "efg":{
-    "x":"a",
-    "y":"b"
 
-  }
-}
-  
-  }
   
   
 

@@ -55,5 +55,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: #000000c7;
     color: #fafafa;
 
- 
 }
+.mat-icon-rtl-mirror{
+  
+    color: #101110;
+    vertical-align: middle;
+
+
+}
+

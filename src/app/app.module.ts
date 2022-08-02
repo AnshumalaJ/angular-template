@@ -11,7 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { McJsonEditorComponent } from './mc-json-editor/mc-json-editor.component';
 
 import { TypePipe } from './mc-json-editor/type-pipe';
-
+import { McTreestructureJsonEditorComponent } from './mc-treestructure-json-editor/mc-treestructure-json-editor.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -22,9 +24,9 @@ import { TypePipe } from './mc-json-editor/type-pipe';
     ExtractionConfigViewerComponent,
     NgxJsonViewerComponent,
     McJsonEditorComponent,
-    TypePipe
-   
- 
+    TypePipe,
+    McTreestructureJsonEditorComponent
+    
 
   ],
   imports: [
@@ -33,7 +35,9 @@ import { TypePipe } from './mc-json-editor/type-pipe';
     BrowserAnimationsModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule  
+    ReactiveFormsModule,
+    MatTreeModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

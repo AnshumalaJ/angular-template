@@ -12,14 +12,11 @@ export class TypePipe implements PipeTransform {
     // if (isNumber(value)) return 'number';
     // if (isBoolean(value)) return 'boolean';
 
-    for (const [k, v] of Object.entries(value)) {
- 
+    for (const [k, v] of Object.entries(value)){
        if (isString(v) || isNumber(v))
         continue;
        else
        return 'non_leaf'
-      
-
       }
   
     return 'leaf';

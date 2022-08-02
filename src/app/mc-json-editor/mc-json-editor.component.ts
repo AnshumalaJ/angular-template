@@ -16,8 +16,13 @@ export class McJsonEditorComponent implements OnInit {
 
   @Input() json: any = {};
   form: FormGroup | FormArray;
+  all_meta: any;
 
   constructor() {}
+
+  get _form():FormGroup{
+    return this.form as FormGroup
+  }
 
   ngOnInit(): void {}
 
@@ -26,6 +31,9 @@ export class McJsonEditorComponent implements OnInit {
     console.log(isEqual(this.json,this.dfsFormBuilder(this.json).value))
     this.form = this.dfsFormBuilder(this.json)
     console.log(this.form.value)
+    console.log(this.form)
+    this.all_meta=this.formControlRecursiveMeta(this._form)
+
   }
 
   private dfsFormBuilder(json: any): FormGroup | FormArray {
@@ -88,6 +96,50 @@ export class McJsonEditorComponent implements OnInit {
       } else { return false }
     }
     return true
+  }
+  formControlRecursiveMeta(form:any): {}{
+    let myMeta:any = {};
+    let i = 0;
+    let j = 0;
+    Object.keys(form.controls).forEach(key =>{
+      if(!!form.controls[key].controls){
+        myMeta['group'+ i.toString()] = {
+          group: this.formControlRecursiveMeta(form.controls[key]),
+          order: i + j,
+          name: key,
+          label: this.fixLabel(key)
+        };
+        i = i + 1;
+      }else{
+        myMeta['input' + j.toString()] = {
+          type: this.inputType(form.controls[key]),
+          name: key,
+          disabled: false,
+          label: this.fixLabel(key),
+          order: i + j,
+          value: form.controls[key].value
+        };
+        j = j + 1;
+      }
+    });
+    console.log(myMeta)
+    return myMeta
+  }
+
+  keys(input:any){
+    if(input){
+      return Object.keys(input);
+    }else{
+      return []
+    }
+  }
+  fixLabel(key: string): string{
+    let returnLabel = key.toUpperCase()
+
+    return returnLabel
+  }
+  inputType(info:any): string{
+    return 'text'
   }
 
   onSubmit(form:FormGroup){

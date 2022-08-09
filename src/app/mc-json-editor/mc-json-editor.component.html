@@ -1,13 +1,14 @@
-<!-- 
-    <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:form,controls:form.controls}">
+<form [formGroup]="_form" (ngSubmit)="onSubmit(_form)">
+    <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:form,formGroup:_form}">
     </ng-container>
   
 
+   
 
-
-    <ng-template #non_leaf let-form="form" let-controls="controls" >
+    <ng-template #non_leaf let-form="form" let-form_group="formGroup">
     
       <ng-container *ngFor="let element of form.value|keyvalue;let i =index;">
+        
         <br><br><span  >{{element.key}}</span>
         <br><br><span>{{element.value|type}}</span>
         <span>:</span><br>
@@ -15,123 +16,33 @@
 
       <ng-container *ngIf="element.value|type as result">
         <ng-container *ngIf="result=='leaf'">
-          <ng-container [ngTemplateOutlet]="leaf" [ngTemplateOutletContext]="{form:element}">
+          <ng-container [ngTemplateOutlet]="leaf" [ngTemplateOutletContext]="{form:element,formGroup:form_group.get(element.key)}">
           </ng-container>
         </ng-container>
         <ng-container *ngIf="result=='non_leaf'">
-          <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:element}">
+          <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:element,formGroup:form_group.get(element.key)}">
           </ng-container>
         </ng-container>
       </ng-container>
       </ng-container>
+     
     </ng-template>
 
 
-<ng-template #leaf  let-form="form">
+<ng-template #leaf  let-form="form" let-form_group="formGroup">
  
   <ng-container *ngFor="let element of form.value|keyvalue;let i =index;">
     <br><span>{{element.key}}</span>
     <span>:</span>
-    <input [placeholder]="element.value">
+    <input [placeholder]="element.value" [formControl]="form_group.get(element.key)">
 
   </ng-container>
 
-</ng-template> -->
-
-
-    <!-- <pre>{{form.value|json}}</pre>
-
-
-
-<ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:form,my_meta: all_meta}">
-</ng-container>
-
-
-
-
-<ng-template #non_leaf let-form="form" let-meta="my_meta" >
-
-  <ng-container *ngFor="let key of keys(meta);let i =index;">
-    <h4>{{meta[key].label}}</h4>
-    <span>:</span><br>
-
-
-  <ng-container *ngIf="element.value|type as result">
-    <ng-container *ngIf="result=='leaf'">
-      <ng-container [ngTemplateOutlet]="leaf" [ngTemplateOutletContext]="{form:element}">
-      </ng-container>
-    </ng-container>
-    <ng-container *ngIf="result=='non_leaf'">
-      <ng-container [ngTemplateOutlet]="non_leaf" [ngTemplateOutletContext]="{form:element}">
-      </ng-container>
-    </ng-container>
-  </ng-container>
-  </ng-container>
 </ng-template>
+<button type="submit"> submit</button>
+</form>
 
 
-<ng-template #leaf  let-form="form">
-
-<ng-container *ngFor="let element of form.value|keyvalue;let i =index;">
-<br><span>{{element.key}}</span>
-<span>:</span>
-<input [placeholder]="element.value">
-
-</ng-container>
-
-</ng-template> -->
-
-<div *ngIf="_form">
-  <!--
-  ******************************
-  INITIALIZE RECURSION
-  ******************************
-  -->
-  <ng-container [ngTemplateOutlet]="inputTemplateRef"
-                [ngTemplateOutletContext]="{my_meta: all_meta, my_form_group: _form}">
-
-  </ng-container>
-
-  <ng-template #inputTemplateRef let-meta="my_meta" let-my_formGroup="my_form_group">
-    <div [formGroup]="my_formGroup">
-      <hr>
-
-      <!--
-      ******************************
-      LOOP THROUGH ALL THE META DATA KEYS
-      ******************************
-      -->
-      <div *ngFor="let key of keys(meta)">
-        <h4>{{meta[key].label}}</h4>
-
-        <!--
-        ******************************
-        INPUTS OF CURRENT FORM GROUP
-        ******************************
-        -->
-        <div *ngIf="key.startsWith('input')">
-            <input type="text" formControlName="{{meta[key].name}}">
-        </div>
-
-
-        <!--
-        ******************************
-        IF KEY IS NOT AN INPUT, THEN IT IS A GROUP WITH INPUTS UNDERNEATH IT
-        GENERATE A NEW FORM GROUP AND RECURSIVELY BUILD IT
-        ******************************
-        -->
-        <div *ngIf="key.startsWith('group')">
-          <div>
-            <ng-container [ngTemplateOutlet]="inputTemplateRef"
-            [ngTemplateOutletContext]="{my_meta: meta[key].group, my_form_group: my_formGroup.controls[meta[key].name]}">
-            </ng-container>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-</div>
-<!--</ng-container>-->
 
 
 

@@ -12,74 +12,26 @@
           'expandable': isExpandable(segment),
           'expanded': segment.expanded
         }">
-       
- 
+        <button mat-icon-button>
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{isExpandable(segment)? 'expand_more' :''}}
+          </mat-icon>
+        </button>
+      
         <div *ngIf="isExpandable(segment)" class="toggler"></div>
         <span class="segment-key">{{ segment.key }}</span>
         <span class="segment-separator">: </span>
-        <span *ngIf="!editable && (!segment.expanded || !isExpandable(segment))" class="segment-value">{{segment.description}}</span>
-    
-        <input *ngIf="editable &&(!segment.expanded || !isExpandable(segment))" class="segment-value" [value]="segment.description"  (change)="onEditValue($any($event.target).value,segment,segments)">
-         
+        <span *ngIf="!segment.expanded || !isExpandable(segment)" class="segment-value">{{segment.description}}
           <mat-icon *ngIf=" (segment.key !='type') " class="icon-display" (click)="onDescribe(segment.description)">description</mat-icon>
-          <mat-icon *ngIf=" segment.key !='type'" class="icon-display-save"(click)="onCopyToClipboard(segment.description)">file_copy</mat-icon>
-     
-
-       
-      </section>
+         <mat-icon *ngIf=" segment.key !='type'" class="icon-display-save"(click)="onCopyToClipboard(segment.description)">file_copy</mat-icon>
+        </span>
+        </section>
       <section *ngIf="segment.expanded && isExpandable(segment)" class="children">
-        <ngx-json-viewer [json]="segment.value" [parent_segment]="segments"[expanded]="expanded" [depth]="depth" [_currentDepth]="_currentDepth" [editable]="editable" [change_records]="change_records"></ngx-json-viewer>
+        <ngx-json-viewer [json]="segment.value"[expanded]="expanded" [depth]="depth" [_currentDepth]="_currentDepth"></ngx-json-viewer>
       </section>
-
-      
-      <button mat-raised-button *ngIf="(segment.key=='groupHints') && editable" class="updation-button-list" (click)="confirmChange()">Save</button>
-      
     </section>
     
   </section>
-
-
-
- <!-- <section class="ngx-json-viewer">
-    
-  <section
-    *ngFor="let segment of segments;let i =index"
-    [ngClass]="['segment', 'segment-type-' + segment.type]">
- 
-    <section 
-      (click)="toggle(segment,i,segments)"
-      [ngClass]="{
-        'segment-main': true,
-        'expandable': isExpandable(segment),
-        'expanded': segment.expanded
-      }">
-     
-
-      <div *ngIf="isExpandable(segment)" class="toggler"></div>
-      <span class="segment-key">{{ segment.key }}</span>
-      <span class="segment-separator">: </span>
-      <span  class="segment-value" [ngClass]="{'invisible':!(!editable && (!segment.expanded || !isExpandable(segment)))}">{{segment.description}}</span>
-  
-      <input class="segment-value" [ngClass]="{'invisible':!(editable && (!segment.expanded || !isExpandable(segment)))}" [value]="segment.description"  (change)="onEditValue($any($event.target).value,segment,segments)">
-       
-        <mat-icon *ngIf=" (segment.key !='type') " class="icon-display" (click)="onDescribe(segment.description)">description</mat-icon>
-        <mat-icon *ngIf=" segment.key !='type'" class="icon-display-save"(click)="onCopyToClipboard(segment.description)">file_copy</mat-icon>
-   
-
-     
-    </section>
-    <section class="children" [ngClass]="{'invisible':!(segment.expanded && isExpandable(segment))}">
-      <ngx-json-viewer [json]="segment.value" [total_segment]="segments"[expanded]="expanded" [depth]="depth" [_currentDepth]="_currentDepth" [editable]="editable" [actual_data]="actual_data"></ngx-json-viewer>
-    </section>
-
-    
-    <button mat-raised-button *ngIf="(segment.key=='groupHints') && editable" class="updation-button-list" (click)="confirmChange()">Save</button>
-    
-  </section>
-  
-</section>
-  -->
-
 
 
 

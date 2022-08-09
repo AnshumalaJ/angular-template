@@ -9,6 +9,7 @@ export class FileNode {
   children: FileNode[];
   filename: string;
   type: any;
+  formType:FormGroup|FormArray|FormControl
 }
 
 @Component({
@@ -131,12 +132,14 @@ export class McTreestructureJsonEditorComponent implements OnInit {
       const node = new FileNode();
       node.filename = key;
 
+
       if (value != null) {
         if (typeof value === 'object') {
           node.children = this.buildFileTree(value, level + 1);
         }
         else {
           node.type = value;
+          node.formType=new FormControl(value)
         }
       }
       return accumulator.concat(node);

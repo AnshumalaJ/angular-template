@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { SeedGroupHintValidator } from '../validator/seed-group-hint-validator';
 
 
 @Component({
@@ -13,232 +13,126 @@ export class ExtractionConfigViewerComponent implements OnInit {
 
   
   
-
+ 
 
   data ={
     "groupHints": {
       "paginator_config": {
-        "param": "page=",
+        "param": "pageNumber=",
         "increment": 1
       },
+      "parent_selector": {
+        "xpath": "//div[contains{{{}}}}}}}}}}}}(@class,'item-container')]",
+        "type": 2,
+        "formatxpath": "//b[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'), '_FIELD_LABEL_')]//following-sibling::text()"
+      },
       "heading_selector": {
-        "xpath": "//h3[@class='product-card-details__title']/text()",
+        "xpath": "//div{{{[contains(@class,'inv-item-name')]",
         "type": 2
       },
       "mi_selector": {
-        "xpath": "//a[@class='js-click-handler listing-fpa-link tracking-standard-link']",
-        "type": 4,
-        "regex": "(.*)\\?"
+        "xpath": "//div[contains(@class,'inv-item-image')]/a",
+        "type": 4
       },
-      "parent_selector": {
-        "xpath": "//li[@class='search-page__result']/article[@class='product-card ']",
+      "expected_count_selector": {
+        "xpath": "//div[contains(@id,'inv-list-table_info')]",
         "type": 2
       },
       "target_fields": {
-        "id": {
-          "xpath": "//a[contains(@class,'listing-fpa-link')]/@href",
-          "type": 2,
-          "regex": "car-details\\/(.*)\\?"
-        },
-        "year": {
-          "xpath": "//li[contains(text(),'reg')]",
-          "type": 2
-        },
-        "miles": {
-          "xpath": "//li[contains(text(),'miles')]",
-          "type": 2
-        },
-        "photo_link": {
-          "xpath": "//img[contains(@class,'product-card-image')]",
-          "type": 2
-        },
         "price": {
-          "xpath": "//div[contains(@class,'price')] ",
-          "price_from_container": {
-            "xpath": "//div[contains(@class,'price')]/span "
-          },
-          "type": 2
-        },
-        "car_seller_name": {
-          "xpath": "//h3[contains(@class,'seller-info__name')]",
+          "xpath": "//div[@class='inv-item-price']",
           "type": 2
         }
       },
       "mi_fields": {
+        "condition": {
+          "jpath": "$..condition'.desc",
+          "type": 2
+        },
         "make": {
-          "jpath": "vehicle.make",
-          "type": 2
-        },
-        "model": {
-          "jpath": "vehicle.model",
-          "type": 2
-        },
-        "photo_links": {
-          "jpath": "$.advert.images..src",
-          "type": 2,
-          "multivalued": 1,
-          "separator": "|",
-          "transformations": [
-            [
-              "/{resize}",
-              ""
-            ],
-            [
-              ",",
-              "|"
-            ]
-          ]
-        },
-        "seller_comments": {
-          "jpath": "advert.description",
-          "type": 2
-        },
-        "photo_link": {
-          "jpath": "advert.mainImageUrl",
-          "type": 2,
-          "transformations": [
-            [
-              "/{resize}",
-              ""
-            ]
-          ]
-        },
-        "trim": {
-          "jpath": "vehicle.trim",
-          "type": 2
-        },
-        "year": {
-          "jpath": "vehicle.year",
+          "jpath": "$..general.manufacturer.desc",
           "type": 2
         },
         "body_type": {
-          "jpath": "vehicle.keyFacts.body-type",
+          "jpath": "$..general.category'.desc",
           "type": 2
         },
-        "doors": {
-          "jpath": "vehicle.keyFacts.doors",
+        "body_subtype": {
+          "jpath": "$..general.subcategory.desc",
           "type": 2
         },
-        "fuel_type": {
-          "jpath": "pageData.tracking.fuel_type",
-          "type": 2
-        },
-        "stock_no": {
-          "jpath": "advert.stockRevisionNumber",
-          "type": 2
-        },
-        "miles": {
-          "jpath": "vehicle.keyFacts.mileage",
-          "type": 2
-        },
-        "price": {
-          "jpath": "advert.price",
-          "type": 2
-        },
-        "car_seller_name": {
-          "jpath": "seller.name",
-          "type": 2
-        },
-        "car_county": {
-          "jpath": "seller.location.county",
-          "type": 2
-        },
-        "car_state": {
-          "jpath": "seller.location.region",
-          "type": 2
-        },
-        "car_zip": {
-          "jpath": "seller.location.postcode",
-          "type": 2
-        },
-        "car_street": {
-          "jpath": "seller.location.addressOne",
-          "type": 2
-        },
-        "car_address": {
-          "jpath": "seller.primaryContactNumber",
-          "type": 2
-        },
-        "transmission": {
-          "jpath": "vehicle.keyFacts.transmission",
-          "type": 2
-        },
-        "co2_emissions": {
-          "jpath": "vehicle.co2Emissions",
-          "type": 2
-        },
-        "registration_no": {
-          "jpath": "vehicle.vrm",
-          "type": 2
-        },
-        "vehicle_registration_date": {
-          "jpath": "vehicle.keyFacts.manufactured-year",
+        "trim": {
+          "jpath": "$..general.trim.desc",
           "type": 2
         },
         "engine_size": {
-          "jpath": "vehicle.keyFacts.engine-size",
+          "jpath": "$..engine.engineSize.desc",
           "type": 2
         },
-        "heading": {
-          "jpath": "advert.title",
+        "cylinders": {
+          "jpath": "$..engine.cylinders.desc",
           "type": 2
         },
-        "seller_email": {
-          "jpath": "seller.emailAddress",
+        "fuel_type": {
+          "jpath": "$..engine.fuelType.desc",
           "type": 2
         },
-        "seller_phone": {
-          "jpath": "seller.primaryContactNumber"
-        },
-        "car_latitude": {
-          "jpath": "seller.latitude",
+        "doors": {
+          "jpath": "$..operational.doors.desc",
           "type": 2
         },
-        "car_longitude": {
-          "jpath": "seller.longitude",
+        "exterior_color": {
+          "jpath": "$..body.exteriorColor.desc",
           "type": 2
         },
-        "num_owners": {
-          "jpath": "vehicle.keyFacts.owners",
+        "interior_color": {
+          "jpath": "$..body.interiorColor.desc",
           "type": 2
         },
-        "seating_capacity": {
-          "jpath": "vehicle.keyFacts.seats",
+        "photo_links": {
+          "jpath": "$..images",
+          "type": 5
+        },
+        "photo_link": {
+          "jpath": "$..image",
+          "type": 5
+        },
+        "vin": {
+          "jpath": "$..general.identification.desc",
           "type": 2
         },
-        "website_id": {
-          "jpath": "seller.dealerWebsite",
+        "miles": {
+          "jpath": "$..general.odometer.desc",
           "type": 2
         },
-        "car_city": {
-          "jpath": "seller.location.town",
+        "msrp": {
+          "jpath": "$..general.msrp.desc",
+          "type": 2
+        },
+        "stock_no": {
+          "jpath": "$..general.'stockNumber'.desc",
+          "type": 2
+        },
+        "year": {
+          "jpath": "$..general.year'.desc",
+          "type": 2
+        },
+        "seller_comments": {
+          "jpath": "$..general.description.desc",
+          "type": 2
+        },
+        "model": {
+          "jpath": "$..general.model.desc",
+          "type": 2
+        },
+        "price": {
+          "jpath": "$..general.msrp.'desc",
           "type": 2
         }
-      },
-      "test":[
-              {1:"abc"},
-              {2:"eee"}
-      ],
-      "test1":[
-              "a",
-              "b"
-      ],
-      "test2":[
-          "a",
-          {2:"eee"}
-          
-      ],
-      "test4":[
-       [
-         "a"
-       ],
-       [
-         "b"
-       ]
-        
-    ],
+      }
     }
   }
+
 
   
   
@@ -250,6 +144,8 @@ export class ExtractionConfigViewerComponent implements OnInit {
   }
  
   ngOnInit(): void {
+     let validator= new SeedGroupHintValidator();
+    console.log(validator.validate(this.data))
   
   }
   

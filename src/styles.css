@@ -6,10 +6,10 @@
     color: rgb(18, 19, 20) !important;
 }
 .segment-type-string > .segment-main > .segment-value {
-    color: rgb(100 117 217) !important;
+    color: rgb(102, 123, 245) !important;
 }
 .segment-type-number > .segment-main > .segment-value {
-    color:  rgb(197, 70, 244) !important;
+    color:  rgb(33, 3, 85) !important;
 }
 
 @import '~@angular/material/theming';

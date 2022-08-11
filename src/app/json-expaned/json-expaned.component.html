@@ -12,26 +12,33 @@
           'expandable': isExpandable(segment),
           'expanded': segment.expanded
         }">
-        <button mat-icon-button>
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{isExpandable(segment)? 'expand_more' :''}}
-          </mat-icon>
-        </button>
-      
         <div *ngIf="isExpandable(segment)" class="toggler"></div>
-        <span class="segment-key">{{ segment.key }}</span>
-        <span class="segment-separator">: </span>
-        <span *ngIf="!segment.expanded || !isExpandable(segment)" class="segment-value">{{segment.description}}
-          <mat-icon *ngIf=" (segment.key !='type') " class="icon-display" (click)="onDescribe(segment.description)">description</mat-icon>
-         <mat-icon *ngIf=" segment.key !='type'" class="icon-display-save"(click)="onCopyToClipboard(segment.description)">file_copy</mat-icon>
-        </span>
-        </section>
+          <button mat-icon-button>
+            <mat-icon *ngIf="isExpandable(segment)" >
+              {{!segment.expanded ? 'chevron_right':'expand_more' }}
+            </mat-icon>
+          </button>
+          <span class="segment-key">{{ segment.key }}</span>
+          <span class="segment-separator">: </span>
+          <span *ngIf="!segment.expanded || !isExpandable(segment)" class="segment-value">{{segment.description}}
+            <mat-icon *ngIf=" segment.type=='string' " class="icon-display" (click)="onDescribe(segment.description)">
+              <!-- description -->
+              <span class="material-symbols-outlined">
+                collections_bookmark
+              </span>
+            </mat-icon>
+            <!-- <mat-icon *ngIf=" segment.type=='string' " class="icon-display-save"(click)="onCopyToClipboard(segment.description)">file_copy</mat-icon> -->
+            <mat-icon *ngIf=" segment.type=='string' " class="icon-display-save"(click)="onCopyToClipboard(segment.description)">
+              <span class="material-icons" >content_copy</span>
+            </mat-icon>
+          </span> 
+      </section>
       <section *ngIf="segment.expanded && isExpandable(segment)" class="children">
         <ngx-json-viewer [json]="segment.value"[expanded]="expanded" [depth]="depth" [_currentDepth]="_currentDepth"></ngx-json-viewer>
       </section>
     </section>
     
-  </section>
+</section>
 
 
 

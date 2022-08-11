@@ -1,5 +1,9 @@
 import { Console } from "winston/lib/winston/transports";
+import { set } from 'lodash-es';
 
+export interface obj {
+  [key: string]: any;
+}
 const TEMPLATE_FIELDS = [
   "paginator_config",
   "heading_selector",
@@ -54,7 +58,8 @@ export class SeedGroupHintValidator {
         if(!hints.hasOwnProperty("parent_selector")){
           throw new Error(`"parent_selector" field is not present. please provide it...`);
         }
-          
+        
+        //check for improper field
         let invalid_fields:string[] = []
         if(!this.validateTemplateKeyFields(hints,invalid_fields)){
           throw new Error(`Found improper field/s in input json file -'${invalid_fields}'`)
@@ -67,14 +72,12 @@ export class SeedGroupHintValidator {
         // Validation for mi2_fields_pattern
         this.validateMiFieldPattern(hints,"mi2_fields_pattern")
 
-        // Validation for empty FIELD_LABELS inside target_fields and mi_fields
-
+        // Validation for empty FIELD_LABELS inside target_fields and mi_field labels
         //validate target_field FIELD_LABELS
         if(!this.validateFieldLabels(hints,"target_fields",invalid_fields)){
           throw new Error(`Please replace space with underscore (_) in "target_fields" in keys ${invalid_fields}`)
         }
-      
-        
+
         //validate mi_fields FIELD_LABELS
         if(!this.validateFieldLabels(hints,"mi_fields",invalid_fields)){
           throw new Error(`Please replace space with underscore (_) in "target_fields" in keys ${invalid_fields}`)
@@ -82,8 +85,10 @@ export class SeedGroupHintValidator {
         
         //check xpath jpath based on response type
         let err=this.checkXpathJpathBasedOnResponseType(hints,"html","json")
-        if(err.length>0)
+        if(err.length>0){
           throw new Error(err)
+        }
+          
 
         //check xpath or  jpath form parent selector
         this.validateParentSelector(hints,"parent_selector")
@@ -324,46 +329,53 @@ export class SeedGroupHintValidator {
                       for (const [f, h] of Object.entries(value as object)){
                         if(!SKIP_FIELD_FOR_VALIDATION.includes(f)){
                           let res=((f==="jpath")) ? this.checkJpathHint(h):this.checkXpathHint(f,h)
-                          if (res===false)
-                           if(syntaxErrors?.field_name?.key == undefined){
-                            syntaxErrors[field_name]={}
-                            syntaxErrors[field_name][key]={}
+                          if (res===false){
+                          // if(syntaxErrors?.field_name== undefined)
+                          //   syntaxErrors[field_name]={}
+                          // if(syntaxErrors?.field_name?.key== undefined)
+                          //   syntaxErrors[field_name][key]={}
+                          // if(syntaxErrors?.field_name?.key?.k == undefined)
+                          //   syntaxErrors[field_name][key][k]={}
+                          // syntaxErrors[field_name][key][k][f]=h
+                          set(syntaxErrors,syntaxErrors.field_name.key.k.f,h)
+                          
                           }
-                            syntaxErrors[field_name][key][k]=`${f}=>${h}` 
                         }
                       }
                     }
                     else if((typeof v ==='string') && (!this.isEmpty(v))){
                       let res=((k==="jpath")) ? this.checkJpathHint(v):this.checkXpathHint(k,v)
                         if (res===false){
-                          if(syntaxErrors?.field_name == undefined){
-                            syntaxErrors[field_name]={}
-                          }
-                            syntaxErrors[field_name][key]=`${k}=>${v}` 
+                          console.log(field_name)
+                          console.log(syntaxErrors[field_name])
+                          if(syntaxErrors?.field_name== undefined)
+                            syntaxErrors[field_name]={};
+                          console.log(syntaxErrors[field_name][key])
+                          if(syntaxErrors?.field_name?.key == undefined)
+                            syntaxErrors[field_name][key]={};
+                          // console.log(syntaxErrors[field_name][key])
+                          // syntaxErrors[field_name][key][k]=v
+                          // console.log(syntaxErrors[field_name][key][k])
+                          set(syntaxErrors,syntaxErrors[field_name][key][k],v)
+
+                          
+                         
                         }   
                     }
-                  }
-                  else if((typeof value ==='string') && (!this.isEmpty(value))){
-                  let res=((key==="jpath")) ? this.checkJpathHint(value):this.checkXpathHint(key,value)
-                  if (res===false){
-                    if(syntaxErrors?.field_name == undefined){
-                      syntaxErrors[field_name]={}
-                    }
-                      syntaxErrors[field_name][key]=value
-                     
-                  
-                  }        
-                
                   }
                 }   
               }
               else if((typeof value ==='string') && (!this.isEmpty(value))){
                 let res=((key==="jpath")) ? this.checkJpathHint(value):this.checkXpathHint(key,value)
                 if (res===false){
-                  if(syntaxErrors?.field_name?.key == undefined){
+                  if(syntaxErrors?.field_name == undefined)
                     syntaxErrors[field_name]={}
-                    syntaxErrors[field_name][key]=value
-              } 
+                    // syntaxErrors[field_name][key]=value
+                    set(syntaxErrors,syntaxErrors[field_name][key],value)
+
+                  
+
+               
             }        
               }
             }
@@ -375,7 +387,7 @@ return syntaxErrors;
   }
 
  
-  
+  //check value for xpath key  and also  regex key
   private checkXpathHint(key:string,value:any){
     if(key ==="regex"){
       if(!!value){
@@ -404,7 +416,8 @@ return syntaxErrors;
     
 
   }
-
+  
+  //check value for jpath key 
   private checkJpathHint(str:any):boolean{
     if(!!str && this.isValidString(str) && this.isValidQuotes(str))
       return true
@@ -415,6 +428,7 @@ return syntaxErrors;
       
   }
 
+  //validate formatxpath key at srp and mi level
   private validateFormatXpathAtSrpAndMiLevel(obj:any,missingField:string[]){
     for(const[key,value] of Object.entries(obj)){
       if(["parent_selector", "mi1_fields_pattern", "mi2_fields_pattern"].includes(key)){
@@ -503,8 +517,11 @@ return syntaxErrors;
       if(symbols.hasOwnProperty(ch))
         stack.push(ch)   
     });
-    if((stack.length & 1) ===1)
+    if((stack.length & 1) ===1){
+      console.log("in false for ",str)
       return false;
+    }
+    
     else 
       return true;
   }

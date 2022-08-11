@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SeedGroupHintValidator } from '../validator/seed-group-hint-validator';
 
 
+
 @Component({
   selector: 'app-extraction-config-viewer',
   templateUrl: './extraction-config-viewer.component.html',
